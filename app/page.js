@@ -7,7 +7,6 @@ export default function LandingPage() {
       <header className="flex text-2xl font-semibold">
         <h1>Model Maker</h1>
         <nav className="">
-          <Link href="/model_maker/app/pages/page.js" className="mr-4">About</Link>
           <Link href="/modelLib" className="mr-4">Model Library</Link>
           <Link href="/modelGen" className="mr-4">Model Generation</Link>
           <Link href="/signIn" className="mr-4">Sign In</Link>
