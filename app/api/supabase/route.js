@@ -1,6 +1,5 @@
 import { supabase } from '../../../_utils/supabaseClient';
 
-// Save a new model (POST)
 export async function POST(req) {
   try {
     const { name, prompt, modelUrl, userId } = await req.json();
@@ -22,7 +21,6 @@ export async function POST(req) {
   }
 }
 
-// Fetch a model by ID (GET)
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
