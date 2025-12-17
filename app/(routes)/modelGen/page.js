@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { generateAndGetModel, saveModel } from '../../../_utils/meshy';
+import { generateAndGetModel } from '../../../_utils/meshy';
 import Header from '../../components/head';
 import Footer from '../../components/foot';
 
