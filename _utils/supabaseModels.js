@@ -42,25 +42,30 @@ export async function saveModel({ modelName, prompt, savedModel, user }) {
   }
 }
 
+export async function getModel(uid) {
+  if (!uid) throw new Error("Missing user ID");
 
-
-
-export async function getModel(id) {
-  if (!id) throw new Error("Missing model ID");
+  console.log("Getting model for user ID:", uid);
 
   const { data, error } = await supabase
-    .from("models")
+    .from("Models")
     .select("*")
-    .eq("id", id)
-    .single();
+    .eq("userID", uid);
 
   if (error) throw error;
 
-  const { publicURL, error: urlError } = supabase.storage
-    .from("models")
-    .getPublicUrl(data.storage_path);
+  if (!data || data.length === 0) {
+    throw new Error(`No models found for user ID: ${uid}`);
+  }
 
-  if (urlError) throw urlError;
+  const modelsWithUrls = data.map((model) => {
+    if (!model.modelURL) {
+      console.warn(`Model with user ID: ${uid} is missing modelURL.`);
+      return { ...model, modelUrl: null };
+    }
+    return { ...model, modelUrl: model.modelURL };
+  });
 
-  return { ...data, modelUrl: publicURL };
+  return modelsWithUrls;
 }
+
