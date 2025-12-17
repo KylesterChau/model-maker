@@ -1,12 +1,13 @@
+import GenerateModel from "@/app/components/generateModel"
 import Header from "../../components/head";
 import Footer from "../../components/foot";
 
-export default function modelLib() {
+export default function modelGen(){
     return(
-    <div className="min-h-screen bg-[#0F172A] text-white font-inter">
-        <Header/>
-        <h1>Model Generator Page</h1>
-        <Footer/>
-    </div>
+        <div className="min-h-screen bg-[#0F172A] text-white font-inter">
+            <Header />
+                <GenerateModel />
+            <Footer />
+        </div>
     )
 }
