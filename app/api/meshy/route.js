@@ -1,47 +1,41 @@
-import { NextResponse } from "next/server";
-
 export async function POST(req) {
   try {
-    const body = await req.json();
+    const { prompt, mode, style } = await req.json();
 
-    if (!body.prompt) {
-      return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
+    if (!prompt) {
+      return new Response(JSON.stringify({ error: "Prompt is required" }), { status: 400 });
     }
 
-    const response = await fetch(
-      "https://api.meshy.ai/openapi/v2/text-to-3d",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.MESHY_API_KEY}`,
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: JSON.stringify({
-          mode: body.mode || "preview",
-          prompt: body.prompt,
-          art_style: body.style || "realistic",
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(
-        "Meshy API error:",
-        response.status,
-        errorText
-      );
-      return NextResponse.json(
-        { error: "Meshy API request failed", details: errorText },
-        { status: response.status }
-      );
-    }
+    const response = await fetch("https://api.meshy.ai/v2/text-to-3d", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.MESHY_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt,
+        mode: mode || "full",
+        style: style || "realistic",
+      }),
+    });
 
     const data = await response.json();
-    return NextResponse.json(data);
+    console.log("Meshy API POST response:", data);
+
+    const taskId = data.task_id || data.id || data.result || null;
+
+    if (!taskId) {
+      return new Response(JSON.stringify({ error: "No task ID returned by Meshy", raw: data }), { status: 500 });
+    }
+
+    return new Response(JSON.stringify({
+      task_id: taskId,
+      modelUrl: data.modelUrl || null,
+      raw: data
+    }), { status: 200 });
+
   } catch (err) {
-    console.error("Server error:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    console.error("POST /api/meshy error:", err);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }
