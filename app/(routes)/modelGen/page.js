@@ -71,7 +71,7 @@ export default function ModelGenPage() {
   return (
     <div className="min-h-screen bg-[#0F172A] text-white font-inter">
       <Header />
-      <section>
+      <main>
         <input
           type="text"
           value={prompt}
@@ -119,7 +119,7 @@ export default function ModelGenPage() {
             />
           </div>
         )}
-      </section>
+      </main>
       <Footer />
     </div>
   );
