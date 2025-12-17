@@ -10,6 +10,12 @@ export default function ModelLibPage(){
   const[models, setModels] = useState([]);
   const { user } = useUserAuth();
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const formattedDate = date.toISOString().split('T')[0];
+    return formattedDate;
+  }
+
   useEffect(() => {
     async function GetModel() {
       try {
@@ -32,10 +38,16 @@ export default function ModelLibPage(){
     <div className="min-h-screen bg-[#0F172A] text-white font-inter">
       <Header />
       <main>
-        <div className="models-container">
+        <div className="models-container flex flex-wrap gap-6 justify-center p-8">
           {models.length > 0 ? (
             models.map((model, index) => (
-              <ModelCard key={index} name={model.name} prompt={model.prompt} modelUrl={model.modelURL} creationDate={model.created_at} />
+              <ModelCard
+                key={index}
+                name={model.name}
+                prompt={model.prompt}
+                modelUrl={model.modelURL}
+                creationDate={formatDate(model.created_at)}
+              />
             ))
           ) : (
             <p>No models have been created yet. Go create your first one in the model generator page</p>

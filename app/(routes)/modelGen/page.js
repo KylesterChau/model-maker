@@ -15,7 +15,7 @@ export default function ModelGenPage() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [modelName, setModelName] = useState("");
   const { user } = useUserAuth();
-
+  
   async function handleGenerate(){
     if (!prompt.trim()) {
       setError('Please enter a prompt.');
@@ -101,7 +101,7 @@ export default function ModelGenPage() {
               onClick={() => window.open(savedModel.modelUrl, '_blank')}
               className="ml-4 bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
             >
-              Open in GLB Viewer
+              Download Model
             </button>
             <button
               onClick={() => setIsPopupOpen(true)}
