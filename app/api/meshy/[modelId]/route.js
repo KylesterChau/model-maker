@@ -1,6 +1,5 @@
 export async function GET(req, context) {
   try {
-    // ✅ FIX: await params
     const { modelId } = await context.params;
 
     if (!modelId) {

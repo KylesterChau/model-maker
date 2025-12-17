@@ -96,3 +96,7 @@ export async function generateAndGetModel(prompt, options = {}) {
   console.warn("Meshy job did not finish in time:", taskId);
   throw new Error("Model not ready after maximum attempts");
 }
+
+export async function saveModel(modelData) {
+  console.log("Saving model data:", modelData);
+}

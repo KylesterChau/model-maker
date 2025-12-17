@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import Footer from "../../components/foot";
 import { useState, useEffect } from "react";
 import { useUserAuth } from "../../../_utils/AuthContext";
 import { useRouter } from "next/navigation";
@@ -144,7 +143,6 @@ return (
     >
       Sign in with Google
     </button>
-    <Footer />
   </div>
 );
 }
